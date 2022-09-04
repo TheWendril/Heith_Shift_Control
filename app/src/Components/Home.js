@@ -3,6 +3,7 @@ import wallpaper from '../assets/home_wallpaper.jpg'
 import Grid from '@mui/material/Grid';
 import { Button, Slider, Box, Typography } from "@mui/material";
 import { useState } from "react";
+import {Link} from 'react-router-dom'
 
 var PageStyle = {
     backgroundImage: "url(" + wallpaper + ")",
@@ -16,8 +17,7 @@ var PageStyle = {
     display: 'flex',
     justifyContent: 'center',
     verticalAlign: 'middle',
-    alignItems: 'center'
-    
+    alignItems: 'center'   
 }
 
 var FormStyle = {
@@ -39,7 +39,11 @@ export default function Home(){
     const handleChange = (event, value) => setSlideValue(value)
     
     let clickButton = event => {localStorage.setItem('players', slideValue);
-                                localStorage.setItem('inGame', true)}
+                                localStorage.setItem('inGame', true)
+                                localStorage.setItem('gameDay', 1)
+                                localStorage.setItem('turn', 1)
+                                localStorage.setItem('fullMoon', false)
+                                }
 
     return (
         <div className="HomePage" style={PageStyle}>
@@ -71,7 +75,9 @@ export default function Home(){
                 </Grid>
 
                 <Grid item xs={4} style={GridItemStyle}>
-                    <Button variant='contained' color='error' onClick={clickButton}> Começar </Button>
+                    <Link to='/game'>
+                        <Button variant='contained' color='error' onClick={clickButton}> Começar</Button>
+                    </Link>    
                 </Grid>
             
             </Grid>
