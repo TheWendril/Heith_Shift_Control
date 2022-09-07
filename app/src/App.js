@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import React from 'react';
 import Home from './Components/Home';
 import Game from './Components/Game';
-import { Switch } from '@mui/material';
 
 var AppStyle ={
   margin: '-1vh',
@@ -10,6 +9,7 @@ var AppStyle ={
 }
 
 function App() {
+
   return (
     <div style={AppStyle}>
       <Router>      
