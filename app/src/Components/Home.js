@@ -3,7 +3,7 @@ import wallpaper from '../assets/home_wallpaper.jpg'
 import Grid from '@mui/material/Grid';
 import { Button, Slider, Box, Typography } from "@mui/material";
 import { useState } from "react";
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 var PageStyle = {
     backgroundImage: "url(" + wallpaper + ")",
@@ -34,10 +34,14 @@ var GridItemStyle = {
 
 export default function Home(){
 
-    let slidervalue = value => value
     const [slideValue, setSlideValue] = useState(2);
     const handleChange = (event, value) => setSlideValue(value)
-    
+    const navigate = useNavigate()
+
+    if(localStorage.getItem('inGame') == 'true')
+        navigate("/game")
+
+    let slidervalue = value => value    
     let clickButton = event => {localStorage.setItem('players', slideValue);
                                 localStorage.setItem('inGame', true)
                                 localStorage.setItem('gameDay', 1)

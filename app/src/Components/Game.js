@@ -1,10 +1,12 @@
 import React from "react";
-import {Button, Grid} from '@mui/material'
+import {Button, Grid, Typography} from '@mui/material'
 import { useState } from "react";
 import night from '../assets/night.jpg'
 import day from '../assets/day.jpg'
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import NightsStayIcon from '@mui/icons-material/NightsStay';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import RotateRightIcon from '@mui/icons-material/RotateRight';
 
 
 var DefaultGamePageStyle = {
@@ -38,24 +40,26 @@ var FormStyle = {
 var SpaceItemsJustify = {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'center',
+    alignContent: 'center'
 }
 
 export default function Game(){
 
+    const navigate = useNavigate()
     const [gameDay, setDay] = useState(parseInt(localStorage.getItem('gameDay')))
     const [turn, setTurn] = useState(parseInt(localStorage.getItem('turn')))
     const [fullMoon, setFullMoon] = useState(localStorage.getItem('fullMoon') === 'true')
     const [players, setPlayers] = useState(parseInt(localStorage.getItem('players')))
     const [GamePageStyle, setGamePageStyle] = useState(GamePageStyleDay)
 
-
     const resetAll = (event) => {
-        localStorage.setItem('gameDay', 0)
+        localStorage.setItem('gameDay', 1)
         localStorage.setItem('inGame', false)
-        localStorage.setItem('turn', 0)
+        localStorage.setItem('turn', 1)
         localStorage.setItem('fullMoon', false)
-        window.location.reload(false)
+        navigate("/")
+        window.location.reload(false)        
     }
 
     const applyChanges = () => {
@@ -91,7 +95,7 @@ export default function Game(){
     }
 
     let nextTurnButton = (event) => {
-        
+
         makeLogic()    
         applyChanges()
     }
@@ -100,25 +104,25 @@ export default function Game(){
     <div style={GamePageStyle}>
         
 
-        <Grid xs={10} sm={8} md={4} direction={'column'} container style={FormStyle}>
+        <Grid xs={10} sm={8} md={5} direction={'column'} spacing={2} container style={FormStyle}>
 
-            <Grid container direction={'row'} style={SpaceItemsJustify}>
+            <Grid container direction={'row'} style={{...SpaceItemsJustify, marginTop: '10px'}}>
 
-                <Grid item xs={12} sm={4}>Dia: {gameDay}</Grid>
-                <Grid item xs={12} sm={4}>Turno: {turn}</Grid>
-                <Grid item xs={12} sm={4}>Lua Cheia: {fullMoon.toString()}</Grid>
+                <Grid item xs={4} sm={4} style={SpaceItemsJustify}> <CalendarMonthIcon/>  Dia: {gameDay} </Grid>
+                <Grid item xs={4} sm={4}style={SpaceItemsJustify}>  <RotateRightIcon/> Turno: {turn}</Grid>
+                <Grid item xs={4} sm={4} style={SpaceItemsJustify}> <NightsStayIcon/> {fullMoon.toString() == 'false' ? 'Não' : 'Sim'}</Grid>
             
             </Grid>
 
-            <Grid item xs={6} sm={4} md={9}></Grid>
+            <Grid item xs={7} sm={8} md={7} lg={8}></Grid>
 
-            <Grid container direction={'row'}  style={SpaceItemsJustify}>
+            <Grid container direction={'row'} justifyContent='center' alignItems='center'>
     
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={4} sm={6} style={SpaceItemsJustify}>
                     <Button variant="contained" color={'error'} onClick={resetAll}>Resetar</Button>        
                 </Grid>
                 
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={4} sm={6} style={SpaceItemsJustify}>
                     <Button variant="contained" color={'primary'} onClick={nextTurnButton}>Próximo turno</Button>    
                 </Grid>
             
